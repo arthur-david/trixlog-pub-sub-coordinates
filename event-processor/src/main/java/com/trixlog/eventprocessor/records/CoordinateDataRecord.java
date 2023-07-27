@@ -1,6 +1,7 @@
-package com.trixlog.gatewayapi.records;
+package com.trixlog.eventprocessor.records;
 
 import java.time.LocalDateTime;
+
 
 public record CoordinateDataRecord(
         LocalDateTime coordinateDate,
