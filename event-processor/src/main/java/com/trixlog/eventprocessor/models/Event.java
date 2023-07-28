@@ -31,16 +31,16 @@ public class Event {
     private ObjectId openedCoordinateId;
     private ObjectId closedCoordinateId;
 
-    public Event(EventType eventType, CoordinateDataRecord coordinate) {
-        setVehiclePlate(coordinate.vehiclePlate());
-        setOpenedDate(coordinate.coordinateDate());
-        setClosedDate(coordinate.coordinateDate());
-        setLatitude(coordinate.latitude());
-        setLongitude(coordinate.longitude());
-        setEventType(eventType);
-        setSpeed(coordinate.speed());
-        setOpenedCoordinateId(new ObjectId());
-        setClosedCoordinateId(new ObjectId());
+    public Event(EventCoordinate eventCoordinate) {
+        setVehiclePlate(eventCoordinate.getVehiclePlate());
+        setOpenedDate(eventCoordinate.getCoordinateDate());
+        setClosedDate(eventCoordinate.getCoordinateDate());
+        setLatitude(eventCoordinate.getLatitude());
+        setLongitude(eventCoordinate.getLongitude());
+        setEventType(eventCoordinate.getEventType());
+        setSpeed(eventCoordinate.getSpeed());
+        setOpenedCoordinateId(new ObjectId(eventCoordinate.getId()));
+        setClosedCoordinateId(new ObjectId(eventCoordinate.getId()));
     }
 }
 

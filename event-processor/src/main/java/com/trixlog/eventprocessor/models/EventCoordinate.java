@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,7 +22,6 @@ public class EventCoordinate {
 
     @Id
     private String id;
-    private ObjectId objectId;
     private EventType eventType;
     private LocalDateTime coordinateDate;
     private String vehiclePlate;
@@ -36,9 +36,9 @@ public class EventCoordinate {
     private Long packetCounter;
     private Double batteryVoltage;
     private Double temperature;
+    private LocalDateTime createdAt;
 
-    public EventCoordinate(ObjectId objectId, EventType eventType, CoordinateDataRecord coordinate) {
-        setObjectId(objectId);
+    public EventCoordinate(EventType eventType, CoordinateDataRecord coordinate) {
         setEventType(eventType);
         setCoordinateDate(coordinate.coordinateDate());
         setVehiclePlate(coordinate.vehiclePlate());
@@ -53,5 +53,6 @@ public class EventCoordinate {
         setPacketCounter(coordinate.packetCounter());
         setBatteryVoltage(coordinate.batteryVoltage());
         setTemperature(coordinate.temperature());
+        setCreatedAt(LocalDateTime.now());
     }
 }

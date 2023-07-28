@@ -34,33 +34,30 @@ public class EventService {
 
     public void checkEvent(EventType newCoordinateEventType, CoordinateDataRecord coordinate) {
         EventCoordinate lastEventCoordinate = getLastEventCoordinate();
+        EventCoordinate newEventCoordinate = createEventCoordinate(newCoordinateEventType, coordinate);
 
-        Event event;
         if (isNull(lastEventCoordinate) || isNewEventDifferentFromLastEvent(newCoordinateEventType, lastEventCoordinate.getEventType())) {
-            event = createEvent(newCoordinateEventType, coordinate);
+            createEvent(newEventCoordinate);
         } else {
-            ObjectId newEventCoordinateObjectId = new ObjectId();
-            event = updateEvent(lastEventCoordinate.getObjectId(), newEventCoordinateObjectId, coordinate.coordinateDate());
+            updateEvent(lastEventCoordinate, newEventCoordinate);
         }
-
-        createEventCoordinate(event, coordinate);
     }
 
-    public Event createEvent(EventType newCoordinateEventType, CoordinateDataRecord coordinate) {
-        Event event = new Event(newCoordinateEventType, coordinate);
-        return eventRepository.save(event);
+    public EventCoordinate createEventCoordinate(EventType eventType, CoordinateDataRecord coordinate) {
+        EventCoordinate eventCoordinate = new EventCoordinate(eventType, coordinate);
+        return eventCoordinateRepository.save(eventCoordinate);
     }
 
-    public void createEventCoordinate(Event event, CoordinateDataRecord coordinate) {
-        EventCoordinate eventCoordinate = new EventCoordinate(event.getClosedCoordinateId(), event.getEventType(), coordinate);
-        eventCoordinateRepository.save(eventCoordinate);
+    public void createEvent(EventCoordinate eventCoordinate) {
+        Event event = new Event(eventCoordinate);
+        eventRepository.save(event);
     }
 
-    public Event updateEvent(ObjectId lastEventCoordinateObjectId, ObjectId newEventCoordinateObjectId, LocalDateTime coordinateDate) {
-        Event event = eventRepository.findByClosedCoordinateId(lastEventCoordinateObjectId);
-        event.setClosedDate(coordinateDate);
-        event.setClosedCoordinateId(newEventCoordinateObjectId);
-        return eventRepository.save(event);
+    public void updateEvent(EventCoordinate lastEventCoordinate, EventCoordinate newEventCoordinate) {
+        Event event = eventRepository.findByClosedCoordinateId(lastEventCoordinate.getId());
+        event.setClosedDate(newEventCoordinate.getCoordinateDate());
+        event.setClosedCoordinateId(new ObjectId(newEventCoordinate.getId()));
+        eventRepository.save(event);
     }
 
     public boolean isNewEventDifferentFromLastEvent(EventType newCoordinateEventType, EventType eventTypeOfLastEventCoordinate) {
@@ -68,7 +65,7 @@ public class EventService {
     }
 
     public EventCoordinate getLastEventCoordinate() {
-        PageRequest pageRequest = PageRequest.of(0, 1, Sort.by("coordinateDate").descending());
+        PageRequest pageRequest = PageRequest.of(0, 1, Sort.by("createdAt").descending());
         Page<EventCoordinate> page = eventCoordinateRepository.findAll(pageRequest);
         if (page.getContent().isEmpty())
             return null;
