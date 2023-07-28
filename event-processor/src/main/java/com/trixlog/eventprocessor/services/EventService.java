@@ -53,6 +53,10 @@ public class EventService {
 
     public void updateEvent(EventCoordinate lastEventCoordinate, EventCoordinate newEventCoordinate) {
         Event event = eventRepository.findByClosedCoordinateId(lastEventCoordinate.getId());
+
+        if (isNull(event))
+            throw new IllegalArgumentException("Erro ao buscar event anterior");
+
         event.setClosedDate(newEventCoordinate.getCoordinateDate());
         event.setClosedCoordinateId(new ObjectId(newEventCoordinate.getId()));
         eventRepository.save(event);
