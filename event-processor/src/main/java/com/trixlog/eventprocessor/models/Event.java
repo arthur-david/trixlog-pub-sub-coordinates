@@ -1,7 +1,6 @@
 package com.trixlog.eventprocessor.models;
 
 import com.trixlog.eventprocessor.enums.EventType;
-import com.trixlog.eventprocessor.records.CoordinateDataRecord;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
