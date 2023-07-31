@@ -64,7 +64,7 @@ The following tools were used in building the project:
 ## Author
 
 <a href="https://github.com/arthur-david">
- <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/53877762?v=4" width="100px;" alt=""/>
+ <img style="border-radius: 50px;" src="https://avatars.githubusercontent.com/u/53877762?v=4" width="100px;" alt=""/>
  <br />
  <sub><b>Arthur David</b></sub></a>
 
