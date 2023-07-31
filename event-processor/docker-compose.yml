@@ -1,0 +1,7 @@
+services:
+    event-processor:
+        image: event-processor-1.0.0
+        container_name: event-processor
+        network_mode: "host"
+        ports:
+            - 8082:8082

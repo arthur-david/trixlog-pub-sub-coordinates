@@ -1,0 +1,19 @@
+services:
+    rabbitmq:
+        image: rabbitmq:3.12-management
+        container_name: rabbitmq
+        ports:
+            - 19090:5672
+            - 29090:15672
+        environment:
+            - RABBITMQ_DEFAULT_USER=guest
+            - RABBITMQ_DEFAULT_PASS=guest
+
+    mongodb:
+        image: mongo
+        container_name: mongodb
+        ports:
+            - 39090:27017
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: 741852

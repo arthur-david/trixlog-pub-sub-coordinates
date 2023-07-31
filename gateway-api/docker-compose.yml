@@ -1,0 +1,7 @@
+services:
+    gateway-api:
+        image: gateway-api-1.0.0
+        container_name: gateway-api
+        network_mode: "host"
+        ports:
+            - 8081:8081
